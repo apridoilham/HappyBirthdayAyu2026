@@ -15,10 +15,18 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+  /* Membuat efek snap (mengunci) saat scroll */
+  scroll-snap-type: y mandatory;
+  height: 100%;
+}
+
 body {
   font-family: "Outfit", sans-serif;
   overflow-x: hidden;
   background-color: var(--dark);
+  height: 100%;
 }
 
 /* === ANIMASI LOVE TERBANG (BACKGROUND) === */
@@ -34,7 +42,7 @@ body {
 }
 .floating-heart {
   position: absolute;
-  color: rgba(219, 39, 119, 0.3); /* Transparan pink */
+  color: rgba(219, 39, 119, 0.3);
   animation: floatUp linear infinite;
   bottom: -50px;
 }
@@ -81,20 +89,27 @@ body {
 
 /* === GLOBAL UTILS === */
 .section {
-  padding: 5rem 1rem;
+  padding: 2rem 1rem;
   position: relative;
   z-index: 2;
-  min-height: 100vh; /* Full screen per section */
+  /* Kunci: Membuat section selalu full screen */
+  min-height: 100vh;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Center content vertically */
+  justify-content: center; /* Konten selalu di tengah vertikal */
+  align-items: center;
+  /* Bagian dari scroll snap */
+  scroll-snap-align: start;
 }
+
 .container {
   max-width: 800px;
   margin: 0 auto;
   width: 100%;
   position: relative;
 }
+
 .section-title {
   text-align: center;
   margin-bottom: 3rem;
@@ -117,12 +132,11 @@ body {
   color: #ddd;
 }
 
-/* === SECTION 1: HERO (Gradient Pink) === */
+/* === SECTION 1: HERO === */
 .hero {
   background: linear-gradient(135deg, #fdf2f8 0%, #fbcfe8 100%);
   text-align: center;
   color: var(--dark);
-  height: 100vh;
 }
 .badge {
   background: var(--pink-deep);
@@ -173,7 +187,7 @@ body {
   }
 }
 
-/* === SECTION 2: ALASAN (White Clean) === */
+/* === SECTION 2: ALASAN === */
 .reasons {
   background-color: var(--white);
   background-image: radial-gradient(#fecdd3 1px, transparent 1px);
@@ -183,6 +197,7 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 2rem;
+  width: 100%;
 }
 .reason-card {
   background: white;
@@ -209,15 +224,15 @@ body {
   font-size: 1.5rem;
 }
 
-/* === SECTION 3: GALERI BERTUMPUK (Deep Romance) === */
+/* === SECTION 3: GALERI === */
 .gallery-stack {
   background: linear-gradient(to bottom right, #831843, #500724);
   overflow: hidden;
 }
 .stack-area {
   position: relative;
-  width: 300px; /* Lebar HP */
-  height: 533px; /* Rasio 9:16 (300 * 16/9) */
+  width: 300px;
+  height: 533px;
   margin: 0 auto;
   perspective: 1000px;
 }
@@ -247,13 +262,12 @@ body {
   opacity: 0.7;
   animation: pulse 2s infinite;
 }
-/* Class untuk animasi buang kartu */
 .fly-out {
   transform: translate(200px, 100px) rotate(45deg) !important;
   opacity: 0 !important;
 }
 
-/* === SECTION 4: SURAT (Paper Texture) === */
+/* === SECTION 4: SURAT === */
 .letter-section {
   background-color: var(--paper);
   position: relative;
@@ -330,7 +344,6 @@ body {
   font-weight: bold;
   cursor: pointer;
 }
-/* Surat Terbuka */
 .letter-paper {
   background: white;
   padding: 2rem;
@@ -347,7 +360,7 @@ body {
   font-size: 1.1rem;
 }
 
-/* === SECTION 5: WISHES & FIREWORKS (Night Sky) === */
+/* === SECTION 5: WISHES === */
 .wishes {
   background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
   position: relative;
@@ -366,7 +379,6 @@ body {
   position: relative;
   z-index: 5;
 }
-
 .wish-slider {
   text-align: center;
   margin-bottom: 2rem;
@@ -430,6 +442,8 @@ body {
   background: #000;
   color: #666;
   font-size: 0.9rem;
+  /* Agar footer tidak mengganggu snap, opsional, tapi lebih baik tidak di snap */
+  scroll-snap-align: start;
 }
 .music-player {
   position: fixed;
@@ -458,14 +472,8 @@ body {
     width: 80%;
     height: 60vh;
   }
+  /* Override padding agar muat di layar HP kecil */
   .section {
-    padding: 4rem 1.5rem;
-    min-height: auto;
-  } /* Allow height to adjust */
-  .hero {
-    min-height: 100vh;
+    padding: 1rem;
   }
-  .gallery-stack {
-    height: 100vh;
-  } /* Gallery needs height for stacking */
 }
