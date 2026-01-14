@@ -1,12 +1,17 @@
 /* === CONFIGURATION === */
 const photos = [
-  "images/foto1.jpg",
-  "images/foto2.jpg",
-  "images/foto3.jpg",
-  "images/foto4.jpg",
-  "images/foto5.jpg",
-  "images/foto6.jpg",
-  "images/foto7.jpg",
+  "images/1.jpg",
+  "images/2.jpg",
+  "images/3.jpg",
+  "images/4.jpg",
+  "images/5.jpg",
+  "images/6.jpg",
+  "images/7.jpg",
+  "images/8.jpg",
+  "images/9.jpg",
+  "images/10.jpg",
+  "images/11.jpg",
+  "images/12.jpg",
 ];
 
 const letterText = `Hi Ayu, Happy Birthday. ❤️<br><br>
