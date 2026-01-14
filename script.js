@@ -9,7 +9,6 @@ const photos = [
   "images/foto7.jpg",
 ];
 
-// Surat dalam Bahasa Inggris yang Romantis
 const letterText = `Hi Ayu, Happy Birthday. ❤️<br><br>
 If there is one definition of magic I am most grateful for, it is the moment the universe crossed my path with yours.<br><br>
 Thank you for not giving up, thank you for being the safest home to return to when the world isn't kind.<br><br>
@@ -27,7 +26,10 @@ document.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => document.getElementById("loading").remove(), 500);
   }, 2000);
 
-  createFloatingHearts();
+  // Panggil Love Animation hanya untuk Hero (#hearts-hero) dan Footer (#hearts-footer)
+  createFloatingHearts("hearts-hero");
+  createFloatingHearts("hearts-footer");
+
   initStackGallery();
   initLetter();
   initWishes();
@@ -62,17 +64,21 @@ function initMusicAutoPlay() {
   document.addEventListener("scroll", playAudio);
 }
 
-/* === 1. FLYING HEARTS ANIMATION === */
-function createFloatingHearts() {
-  const container = document.getElementById("hearts-container");
-  const heartCount = 20;
+/* === 1. FLYING HEARTS ANIMATION (Targeted) === */
+function createFloatingHearts(containerId) {
+  const container = document.getElementById(containerId);
+  // Cek jika container ada
+  if (!container) return;
+
+  const heartCount = 15; // Jumlah hati per container
 
   for (let i = 0; i < heartCount; i++) {
     const heart = document.createElement("div");
     heart.classList.add("floating-heart");
     heart.innerHTML = '<i class="fas fa-heart"></i>';
 
-    heart.style.left = Math.random() * 100 + "vw";
+    // Random posisi dan animasi
+    heart.style.left = Math.random() * 100 + "%"; // Menggunakan % agar relatif terhadap container
     heart.style.animationDuration = Math.random() * 10 + 5 + "s";
     heart.style.fontSize = Math.random() * 20 + 10 + "px";
     heart.style.animationDelay = Math.random() * 5 + "s";
@@ -208,16 +214,14 @@ function initWishes() {
     .addEventListener("click", launchFireworks);
 }
 
-// Flag agar tombol tidak diklik berkali-kali
 let isFireworksPlaying = false;
 
 function launchFireworks() {
   if (isFireworksPlaying) return;
   isFireworksPlaying = true;
 
-  // Ubah tombol jadi "Celebrating..." biar user tau sedang berjalan
   const btn = document.getElementById("firework-btn");
-  btn.innerText = "Celebrating Forever! 🎆";
+  btn.innerText = "Celebrating Forever!";
   btn.style.opacity = "0.7";
 
   const canvas = document.getElementById("fireworks-canvas");
@@ -242,16 +246,14 @@ function launchFireworks() {
     }
   }
 
-  // INFINITE LOOP: Tidak ada 'clearInterval'
   setInterval(() => {
     createExplosion(
       Math.random() * canvas.width,
       (Math.random() * canvas.height) / 2
     );
-  }, 800); // Muncul setiap 0.8 detik selamanya
+  }, 800);
 
   function animate() {
-    // Efek trail agar terlihat smooth
     ctx.fillStyle = "rgba(15, 23, 42, 0.2)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -266,11 +268,9 @@ function launchFireworks() {
       ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
       ctx.fill();
 
-      // Hapus partikel yang sudah mati
       if (p.life <= 0) particles.splice(i, 1);
     });
 
-    // Loop animasi selamanya
     requestAnimationFrame(animate);
   }
   animate();
