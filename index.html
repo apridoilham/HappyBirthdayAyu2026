@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Special for Ayu ❤️</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Outfit:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="hearts-container"></div>
+
+    <div class="loading" id="loading">
+      <div class="spinner">
+        <div class="heart-spin"><i class="fas fa-heart"></i></div>
+      </div>
+      <p>Menyiapkan duniamu...</p>
+    </div>
+
+    <section class="section hero" id="home">
+      <div
+        class="content-wrapper"
+        data-aos="fade-down"
+        data-aos-duration="1500"
+      >
+        <div class="badge">Happy Birthday</div>
+        <h1 class="title">Ayu Kusuma Dewi</h1>
+        <p class="subtitle">My Everything, My Forever.</p>
+        <div class="scroll-hint">
+          <span>Scroll Kebawah</span>
+          <i class="fas fa-chevron-down bounce"></i>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reasons" id="reasons">
+      <div class="container">
+        <div class="section-title dark-text" data-aos="fade-up">
+          <h2>3 Alasan Aku Mencintaimu</h2>
+          <p>Sebenarnya ada ribuan, tapi ini intinya</p>
+        </div>
+
+        <div class="reasons-grid">
+          <div class="reason-card" data-aos="fade-right" data-aos-delay="100">
+            <div class="icon-box">01</div>
+            <h3>Ketulusanmu</h3>
+            <p>
+              Caramu peduli pada hal-hal kecil membuatku sadar betapa
+              berharganya diriku saat bersamamu.
+            </p>
+          </div>
+          <div class="reason-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="icon-box">02</div>
+            <h3>Senyummu</h3>
+            <p>
+              Obat paling ampuh saat hariku buruk. Satu senyuman darimu cukup
+              untuk meredakan amarah dunia.
+            </p>
+          </div>
+          <div class="reason-card" data-aos="fade-left" data-aos-delay="300">
+            <div class="icon-box">03</div>
+            <h3>Kita</h3>
+            <p>
+              Aku tidak hanya mencintaimu, aku mencintai "kita". Siapa aku saat
+              sedang bersamamu.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section gallery-stack" id="gallery">
+      <div class="container">
+        <div class="section-title light-text" data-aos="fade-down">
+          <h2>Kenangan Kita</h2>
+          <p>Tap foto untuk melihat selanjutnya</p>
+        </div>
+
+        <div class="stack-area" id="stack-area">
+          <div class="instruction-text">Tap foto! 👆</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section letter-section" id="letter">
+      <canvas id="confetti-canvas"></canvas>
+
+      <div class="container">
+        <div class="section-title dark-text">
+          <h2>Surat Untukmu</h2>
+        </div>
+
+        <div class="envelope-container" id="envelope-trigger">
+          <div class="envelope">
+            <div class="flap"></div>
+            <div class="body"></div>
+            <div class="letter-preview"><i class="fas fa-heart"></i></div>
+          </div>
+          <button class="open-btn">Buka Surat</button>
+        </div>
+
+        <div class="letter-paper" id="full-letter" style="display: none">
+          <div class="paper-texture"></div>
+          <div class="letter-content" id="typewriter"></div>
+          <div class="letter-footer">
+            <span>With Love,</span>
+            <strong>Aprido Ilham</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section wishes" id="wishes">
+      <canvas id="fireworks-canvas"></canvas>
+
+      <div class="container relative-z">
+        <div class="section-title light-text">
+          <h2>Doaku Hari Ini</h2>
+        </div>
+
+        <div class="wish-slider">
+          <div class="wish-item active">
+            <i class="fas fa-star"></i>
+            <p>"Semoga panjang umur dan sehat selalu, Sayang."</p>
+          </div>
+          <div class="wish-item">
+            <i class="fas fa-infinity"></i>
+            <p>"Semoga kisah kita abadi sampai maut memisahkan."</p>
+          </div>
+          <div class="wish-item">
+            <i class="fas fa-smile-beam"></i>
+            <p>"Semoga kebahagiaan selalu memelukmu setiap detik."</p>
+          </div>
+        </div>
+
+        <button id="firework-btn" class="glow-btn">Rayakan! 🎉</button>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>Created specially for <strong>Ayu Kusuma Dewi</strong></p>
+      <p class="tiny">14 Januari 2026</p>
+    </footer>
+
+    <div class="music-player">
+      <button id="toggle-music">
+        <div class="icon-play"><i class="fas fa-play"></i></div>
+        <div class="icon-pause" style="display: none">
+          <i class="fas fa-pause"></i>
+        </div>
+      </button>
+    </div>
+    <audio id="bg-music" loop>
+      <source src="audio/Bergema.mp3" type="audio/mpeg" />
+    </audio>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
