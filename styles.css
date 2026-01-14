@@ -17,14 +17,20 @@
 
 html {
   scroll-behavior: smooth;
-  height: 100%;
+  /* Perbaikan scroll mobile: height auto agar tidak konflik dengan address bar */
+  height: auto;
+  overflow-x: hidden;
 }
 
 body {
   font-family: "Outfit", sans-serif;
   overflow-x: hidden;
   background-color: var(--dark);
-  height: 100%;
+  color: var(--white);
+  height: auto;
+  position: relative;
+  /* Mengaktifkan momentum scroll yang halus di iOS */
+  -webkit-overflow-scrolling: touch;
 }
 
 /* === ANIMASI LOVE TERBANG (BACKGROUND) === */
@@ -90,12 +96,15 @@ body {
   padding: 4rem 1rem;
   position: relative;
   z-index: 2;
-  min-height: 100vh;
+  /* Gunakan min-height dynamic viewport (dvh) untuk mobile modern */
+  min-height: 100dvh;
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  /* Mencegah layout shift horizontal */
+  overflow: hidden;
 }
 
 .container {
@@ -218,17 +227,19 @@ body {
   margin-bottom: 0.5rem;
   font-size: 1.5rem;
 }
+.reason-card p {
+  color: #4b5563; /* Memastikan teks terbaca */
+}
 
 /* === SECTION 3: GALERI === */
 .gallery-stack {
   background: linear-gradient(to bottom right, #831843, #500724);
   overflow: hidden;
 }
-/* PERUBAHAN UTAMA: Rasio 9:16 */
 .stack-area {
   position: relative;
   width: 300px;
-  height: 533px; /* 300 * 16/9 = 533.33 -> Dibulatkan 533px */
+  height: 533px;
   margin: 0 auto;
   perspective: 1000px;
 }
@@ -354,9 +365,14 @@ body {
   font-family: "Playfair Display", serif;
   line-height: 1.8;
   font-size: 1.1rem;
+  color: #333; /* Warna font surat agar terbaca jelas */
+}
+.letter-footer {
+  color: #333;
+  margin-top: 2rem;
 }
 
-/* === SECTION 5: WISHES === */
+/* === SECTION 5: WISHES (FIXED STABILITY) === */
 .wishes {
   background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
   position: relative;
@@ -375,23 +391,37 @@ body {
   position: relative;
   z-index: 5;
 }
+
+/* PERBAIKAN UTAMA: Grid Overlay 
+   Semua wish ditumpuk di satu tempat yang sama menggunakan CSS Grid.
+   Ini mencegah container membesar/mengecil (naik turun) saat ganti teks.
+*/
 .wish-slider {
   text-align: center;
-  margin-bottom: 2rem;
-  min-height: 150px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  margin-bottom: 3rem;
+  /* Gunakan Grid untuk menumpuk item */
+  display: grid;
+  place-items: center;
+  min-height: 200px; /* Tinggi minimum agar tidak terlalu pendek */
   padding: 0 1rem;
 }
+
 .wish-item {
-  display: none;
-  color: white;
-  animation: fadeUp 0.5s;
+  /* Semua item berada di sel grid yang sama */
+  grid-area: 1 / 1;
+  opacity: 0; /* Default sembunyi dengan transparansi */
+  transition: opacity 0.8s ease-in-out; /* Transisi halus */
+  pointer-events: none; /* Agar teks tersembunyi tidak bisa di-select */
 }
+
 .wish-item.active {
-  display: block;
+  /* Tampilkan item aktif */
+  display: block; /* Pastikan dirender */
+  opacity: 1;
+  pointer-events: auto;
+  animation: none; /* Hapus animasi lama agar tidak bentrok */
 }
+
 .wish-item i {
   font-size: 3rem;
   color: var(--gold);
@@ -400,18 +430,7 @@ body {
 .wish-item p {
   font-size: 1.3rem;
   font-style: italic;
-  line-height: 1.5;
-}
-
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  line-height: 1.6;
 }
 
 .glow-btn {
@@ -440,6 +459,8 @@ body {
   background: #000;
   color: #666;
   font-size: 0.9rem;
+  position: relative;
+  z-index: 10;
 }
 .music-player {
   position: fixed;
@@ -464,12 +485,22 @@ body {
   .title {
     font-size: 2.5rem;
   }
-  /* Responsif Mobile untuk 9:16 */
   .stack-area {
     width: 240px;
-    height: 426px; /* 240 * 16/9 = 426 */
+    height: 426px;
   }
   .section {
     padding: 3rem 1rem;
+    min-height: auto; /* Biarkan tinggi menyesuaikan konten di HP agar tidak maksa */
+    padding-bottom: 4rem; /* Tambah padding bawah agar tidak kepotong */
+  }
+
+  /* Khusus Hero tetap full screen */
+  .hero {
+    min-height: 100dvh;
+  }
+
+  .wish-slider {
+    min-height: 250px; /* Di HP teks lebih panjang, butuh ruang lebih */
   }
 }
