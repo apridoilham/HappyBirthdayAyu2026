@@ -9,11 +9,13 @@ const photos = [
   "images/foto7.jpg",
 ];
 
-const letterText = `Hai Ayu, selamat ulang tahun! ❤️<br><br>
-Mungkin ini terlihat sederhana, tapi percayalah, cintaku padamu jauh lebih rumit dan indah dari kode-kode yang membuat website ini.<br><br>
-Terima kasih sudah bertahan, terima kasih sudah menjadi rumah.<br><br>
-Semoga di usiamu yang baru ini, kebahagiaan selalu menemukan jalan menuju hatimu.<br><br>
-Aku mencintaimu, hari ini dan selamanya.`;
+// Surat dalam Bahasa Inggris yang Romantis
+const letterText = `Hi Ayu, Happy Birthday. ❤️<br><br>
+If there is one definition of magic I am most grateful for, it is the moment the universe crossed my path with yours.<br><br>
+Thank you for not giving up, thank you for being the safest home to return to when the world isn't kind.<br><br>
+I may not be able to give you the world just yet, but I promise to always try to make your world enough and happy.<br><br>
+May all good prayers embrace you in this new age. Let's grow old together, enjoying second by second, day by day.<br><br>
+I love you, more than words can say.`;
 
 /* === INITIALIZATION === */
 document.addEventListener("DOMContentLoaded", () => {
@@ -29,16 +31,15 @@ document.addEventListener("DOMContentLoaded", () => {
   initStackGallery();
   initLetter();
   initWishes();
-  initMusicAutoPlay(); // Fungsi baru untuk auto play
+  initMusicAutoPlay();
 });
 
-/* === MUSIC AUTO PLAY ON INTERACTION === */
+/* === MUSIC AUTO PLAY ON ANY TAP (IMMEDIATE) === */
 function initMusicAutoPlay() {
   const audio = document.getElementById("bg-music");
   const iconPlay = document.querySelector(".icon-play");
   const iconPause = document.querySelector(".icon-pause");
 
-  // Fungsi untuk memutar musik
   const playAudio = () => {
     if (audio.paused) {
       audio
@@ -46,22 +47,19 @@ function initMusicAutoPlay() {
         .then(() => {
           iconPlay.style.display = "none";
           iconPause.style.display = "block";
+          document.removeEventListener("click", playAudio);
+          document.removeEventListener("touchstart", playAudio);
+          document.removeEventListener("scroll", playAudio);
         })
         .catch((err) => {
-          console.log(
-            "Auto-play prevented by browser policy, waiting for next click."
-          );
+          console.log("Waiting for user interaction...");
         });
     }
-    // Hapus listener setelah pertama kali berhasil/dipanggil
-    document.removeEventListener("click", playAudio);
-    document.removeEventListener("touchstart", playAudio);
   };
 
-  // Browser memblokir autoplay murni. Solusinya:
-  // Pasang listener di seluruh dokumen. Begitu user klik/tap APAPUN, musik nyala.
   document.addEventListener("click", playAudio);
   document.addEventListener("touchstart", playAudio);
+  document.addEventListener("scroll", playAudio);
 }
 
 /* === 1. FLYING HEARTS ANIMATION === */
@@ -95,7 +93,7 @@ function initStackGallery() {
     card.style.transform = `rotate(${randomRotate}deg)`;
     card.style.zIndex = index;
 
-    card.innerHTML = `<img src="${src}" alt="Kenangan">`;
+    card.innerHTML = `<img src="${src}" alt="Memories">`;
 
     card.addEventListener("click", function () {
       this.classList.add("fly-out");
@@ -194,7 +192,7 @@ function triggerConfetti() {
   animate();
 }
 
-/* === 4. WISHES & FIREWORKS === */
+/* === 4. WISHES & INFINITE FIREWORKS === */
 function initWishes() {
   const items = document.querySelectorAll(".wish-item");
   let current = 0;
@@ -203,14 +201,25 @@ function initWishes() {
     items[current].classList.remove("active");
     current = (current + 1) % items.length;
     items[current].classList.add("active");
-  }, 4000);
+  }, 5000);
 
   document
     .getElementById("firework-btn")
     .addEventListener("click", launchFireworks);
 }
 
+// Flag agar tombol tidak diklik berkali-kali
+let isFireworksPlaying = false;
+
 function launchFireworks() {
+  if (isFireworksPlaying) return;
+  isFireworksPlaying = true;
+
+  // Ubah tombol jadi "Celebrating..." biar user tau sedang berjalan
+  const btn = document.getElementById("firework-btn");
+  btn.innerText = "Celebrating Forever! 🎆";
+  btn.style.opacity = "0.7";
+
   const canvas = document.getElementById("fireworks-canvas");
   const ctx = canvas.getContext("2d");
   canvas.width = window.innerWidth;
@@ -233,17 +242,16 @@ function launchFireworks() {
     }
   }
 
-  let count = 0;
-  const timer = setInterval(() => {
+  // INFINITE LOOP: Tidak ada 'clearInterval'
+  setInterval(() => {
     createExplosion(
       Math.random() * canvas.width,
       (Math.random() * canvas.height) / 2
     );
-    count++;
-    if (count > 10) clearInterval(timer);
-  }, 500);
+  }, 800); // Muncul setiap 0.8 detik selamanya
 
   function animate() {
+    // Efek trail agar terlihat smooth
     ctx.fillStyle = "rgba(15, 23, 42, 0.2)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -258,10 +266,12 @@ function launchFireworks() {
       ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
       ctx.fill();
 
+      // Hapus partikel yang sudah mati
       if (p.life <= 0) particles.splice(i, 1);
     });
 
-    if (particles.length > 0 || count <= 10) requestAnimationFrame(animate);
+    // Loop animasi selamanya
+    requestAnimationFrame(animate);
   }
   animate();
 }
